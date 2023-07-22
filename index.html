@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="result" id="result">0</div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('7')">7</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('8')">8</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('9')">9</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-primary btn-block" onclick="appendToExpression('/')">/</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('4')">4</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('5')">5</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('6')">6</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-primary btn-block" onclick="appendToExpression('*')">*</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('1')">1</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('2')">2</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('3')">3</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-primary btn-block" onclick="appendToExpression('-')">-</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('0')">0</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary btn-block" onclick="appendToExpression('.')">.</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-primary btn-block" onclick="calculate()">=</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-primary btn-block" onclick="appendToExpression('+')">+</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-danger btn-block" onclick="clearExpression()">C</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    let expression = '0';
+
+    function updateDisplay() {
+      const display = document.getElementById('result');
+      display.textContent = expression;
+    }
+
+    function appendToExpression(value) {
+      if (expression === '0') {
+        expression = value;
+      } else {
+        expression += value;
+      }
+      updateDisplay();
+    }
+
+    function calculate() {
+      try {
+        expression = eval(expression).toString();
+      } catch (error) {
+        expression = 'Error';
+      }
+      updateDisplay();
+    }
+
+    function clearExpression() {
+      expression = '0';
+      updateDisplay();
+    }
+
+    document.addEventListener('keydown', function(event) {
+      const key = event.key;
+      const numKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      const operatorKeys = ['+', '-', '*', '/', '.', '=', 'Enter'];
+      if (numKeys.includes(key)) {
+        event.preventDefault();
+        appendToExpression(key);
+      } else if (operatorKeys.includes(key)) {
+        event.preventDefault();
+        if (key === 'Enter') {
+          calculate();
+        } else {
+          appendToExpression(key);
+        }
+      } else if (key === 'Escape') {
+        event.preventDefault();
+        clearExpression();
+      } else {
+        alert('Only numbers are allowed');
+      }
+    });
+  </script>
+  <script src="https://app.zenclass.in/sheets/v1/js/zen/suite/bundle.js"></script>
+</body>
+</html>
